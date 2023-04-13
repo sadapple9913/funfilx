@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Nav from 'components/Nav'
 import "styles/App.css"
 import Footer from 'components/Footer'
@@ -6,6 +6,8 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 import MainPage from 'routes/MainPage'
 import DetailPage from 'routes/DetailPage'
 import SearchPage from 'routes/SearchPage'
+import Auth from 'routes/Auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 const Layout = () =>{
   return (
@@ -22,15 +24,37 @@ const Layout = () =>{
 // :movieId => localhost:3000/863 state값을 붙이고싶을땐 :을 붙이면 가능하다
 
 function App() {
+  const auth = getAuth();
+  const [init, setInit] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObj, setUserObj] = useState('');
+  
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true);
+        setUserObj(user);
+
+      } else {
+        setIsLoggedIn(false);
+      }
+      setInit(true);
+    });
+  });
+
   return (
     <div className='app'>
       <Routes>
+      {isLoggedIn ? (
         <Route path='/' element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path=':movieId' element={<DetailPage />} />
           <Route path='search' element={<SearchPage />} />
           {/* profile 페이지 만들기 */}
         </Route>
+        ) : (
+        <Route exact path="/" element={<Auth />} />
+        )}
       </Routes>
 
 

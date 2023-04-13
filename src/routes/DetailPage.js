@@ -27,12 +27,13 @@ function DetailPage() {
   }, [movieId]);
 
   if(!movie) return <div>...loading</div>;
+  
   if(!isClicked){
   return (
 
     <section className='Detail__movie__wrap'>
-      <img className='movie__posterr-img'
-       src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt={movie.title || movie.name || movie.original_name} />
+      <img className='movie__poster__img'
+       src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} alt={movie.title || movie.name || movie.original_name} />
       <h1 className='movie__title'>{movie.title}</h1>
       <p className='movie__overview'>{movie.overview}</p>
       <div className='banner__buttons'>
@@ -48,7 +49,7 @@ function DetailPage() {
     <HomeContainer>
     <Iframe
       src={
-        movie.videos.results[0] &&
+         movie.videos.results[0] &&
         `https://www.youtube.com/embed/${movie.videos.results[0].key}?controls=0&autoplay=1&loop=1&mute=1&playlist=${movie.videos.results[0].key}`
       }
       width='640'

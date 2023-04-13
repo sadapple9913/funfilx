@@ -2,25 +2,50 @@
   position: relative;
   top: 0;
   left: 50%;
-  width: 40%;
+  width: 100%;
   height: 100%;
   transform: translateX(-50%);
 }
 
-.movie__posterr-img{
+.Detail__movie__wrap::before	{
+  content: "";
+  z-index: 2;
+  display: inline-block;
+  position: absolute;
+  top: 0;left: 0;
   width: 100%;
   height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+
+.movie__poster__img{
+  z-index: 1;
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+
 }
 
 .movie__title{
+z-index: 3;
+position: absolute;
 font-size: 26px;
+top: 40%;
+left: 10%;
 color: #fff;
 padding: 10px;
 
 }
 
 .movie__overview{
+z-index: 3;
 color: #fff;
+position: absolute;
+top: 50%;left: 10.5%;
+width: 40%;
+
 }
 
 .banner__back{
