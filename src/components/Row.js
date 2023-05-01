@@ -1,17 +1,19 @@
 import axios from 'api/axios';
 import React, { useEffect, useState } from 'react'
-import "styles/Row.css"
 import MovieModal from './MovieModal';
+import MiniMovieModal from '../components/MiniMovieModal';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import "../styles/Row.css"
 
 function Row({isLargeRow, title, id , fetchUrl}) {
   const [movies, setMovies] = useState([]);
   const [modalOpen , setModalOpen] = useState(false);
+  const [miniModalOpen , setMiniModalOpen] = useState(false);
   const [moviesSelected , setMoviesSelected] = useState((""));
 
   const fetchMovieData = async() =>{
@@ -31,7 +33,6 @@ function Row({isLargeRow, title, id , fetchUrl}) {
     setModalOpen(true);
     setMoviesSelected(movie);
   }
-
 
   return (
     <section className='row' key={id}>
@@ -60,14 +61,6 @@ function Row({isLargeRow, title, id , fetchUrl}) {
         }}
       >
 
-      {/* <div className='slider'>
-          <div className='slider__arrow left'
-          onClick={() => {document.getElementById(id).scrollLeft -= (window.innerWidth - 80);}}
-          >
-            <span className='arrow' >
-              {"<"}
-            </span>
-          </div> */}
 
 
           <div id={id} className='row__posters'>
@@ -78,15 +71,15 @@ function Row({isLargeRow, title, id , fetchUrl}) {
               className={`row__poster ${isLargeRow && "row__posterLarge"}` }
               src={`https://image.tmdb.org/t/p/original/${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
               loading='lazy'
-              alt={movie.title || movie.name || movie.original_name}
+              alt={movie.title || movie.name || movie.original_name }
               />
               </SwiperSlide>
             ))}
           </div>
 
           </Swiper>
-
-          {/* <div className='slider__arrow right'
+{/* 
+          <div className='slider__arrow right'
           onClick={() => {document.getElementById(id).scrollLeft += (window.innerWidth - 80);}}>
             <span className='arrow'>
               {">"}

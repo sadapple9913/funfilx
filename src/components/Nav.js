@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import 'styles/Nav.css'
-function Nav() {
+import { signOut, } from "firebase/auth";
+import {auth, db} from '../fbase'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faUser , faPenToSquare , faCircleQuestion} from '@fortawesome/free-regular-svg-icons'
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+
+
+function Nav({userObj}) {
   const [ show , setShow] = useState(false);
   const [searchValue , setSearchValue] = useState("");
   const navigate = useNavigate();
+  const [profileOpen, setProfileOpen] = useState(false); 
+  const [profiles, setProfiles] = useState([]);
+
+  console.log("userObj->>",userObj)
 
   useEffect(() =>{
     window.addEventListener("scroll" , () =>{
@@ -21,11 +32,36 @@ function Nav() {
     }
   },[])
 
+  useEffect(() => {
+    const q = query(collection(db, "profiles"), 
+ /*    where("name", "==", userObj.displayName) */);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const documents = querySnapshot.docs.map(doc => doc.data());
+      setProfiles(documents);
+      if (documents.length > 0) {
+        const profile = documents[0];
+        userObj.photoURL = profile.photoURL;
+        console.log("userObj updated:", userObj);
+      }
+    });
+    return unsubscribe;
+  }, [userObj]);
 
+  where("name", "==", userObj.displayName)
   const onChange = (e) => {
     setSearchValue(e.target.value);
     navigate(`/search?q=${e.target.value}`)
   }
+
+  const onLogOutClick = () => {
+    signOut(auth);
+    navigate("/", { replace: true });
+  };
+
+  const onClick =() =>{
+    setProfileOpen(!profileOpen);
+  }
+
 
   return (
 
@@ -34,10 +70,34 @@ function Nav() {
       onClick={() => {window.location.href="/funflix"}}/>
 
       <input tpye="sreach" placeholder='영화를 검색해주세요' className='nav__input' onChange={onChange} value={searchValue} />
-
-      <img src='https://occ-0-4796-988.1.nflxso.net/dnm/api/v6/K6hjPJd6cR6FpVELC5Pd6ovHRSk/AAAABbme8JMz4rEKFJhtzpOKWFJ_6qX-0y5wwWyYvBhWS0VKFLa289dZ5zvRBggmFVWVPL2AAYE8xevD4jjLZjWumNo.png?r=a41' alt='User logged' className='nav__avatar' />
+      
+      <img src={userObj.photoURL} alt='User logged' className='nav__avatar' onClick={onClick}/>
+      
+      <div className='open_icon'></div>
+      
+      {profileOpen && ( 
+      <div className='profile_wrap'>
+        <div className='nav__profile'>   
+        <img src={userObj.photoURL} alt='profile image' className='nav__profile__image'/>
+        <p className='nav__profile__name'>{userObj.displayName}</p>
+        </div>
+        
+        <span className='profile_icon'>
+        <FontAwesomeIcon icon="fa-solid fa-caret-up" />
+        </span>
+        <div className='profile_edit'>
+        <FontAwesomeIcon icon={faPenToSquare} /> 프로필 관리
+        </div>
+        <div className='customer'>
+        <FontAwesomeIcon icon={faUser} /> 계정</div>
+        <div className='customer__center'>
+        <FontAwesomeIcon icon={faCircleQuestion} /> 고객 센터</div>
+        <button className="LogOut" onClick={onLogOutClick}>
+          넷플릭스에서 로그아웃
+        </button>
+        </div>
+      )}
     </nav>
-
 
   )
 }

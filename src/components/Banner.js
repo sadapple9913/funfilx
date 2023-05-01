@@ -4,16 +4,28 @@ import requests from 'api/requests';
 import styled from 'styled-components'
 import 'styles/Banner.css'
 import DetailPage from 'routes/DetailPage';
+import MovieModal from './MovieModal';
 
 function Banner() {
-  const [movie , setMoive] =useState([]);
+const [movie , setMovie] =useState([]);
 const [isClicked , setIsClicked] = useState(false);
+const [movies, setMovies] = useState([]);
+const [modalOpen , setModalOpen] = useState(false);
+const [moviesSelected , setMoviesSelected] = useState((""));
+
   useEffect(() =>{
     fetchData();
   },[])
 
+  const handleClick = (movie) =>{
+    console.log("movie->",movie)
+    setModalOpen(true);
+    setMoviesSelected(movie);
+  }
+
   const fetchData = async() => {
     const request = await axios.get(requests.fetchNowPlaying); //axios라는 컴포넌트를 만들고 가져와서 데이터는 입력한걸 쓴다
+    const request2 = await axios.get()
     console.log(request);
 
     //200개 영화 중 영화 하나의 ID를 랜덤하게 가져오기
@@ -31,7 +43,7 @@ const [isClicked , setIsClicked] = useState(false);
     {params : {append_to_response:"videos"}
   });
     console.log("movieDetail",movieDetail);
-    setMoive(movieDetail);
+    setMovie(movieDetail);
   }
   
   const truncate = (str , n) =>{
@@ -55,8 +67,12 @@ const [isClicked , setIsClicked] = useState(false);
            <button className='banner__button play' onClick={() => setIsClicked(true)} >
              play
            </button>
-           <button className='banner__button info' >
-             {/* <div className='space'></div> */}More Information
+           <button className='banner__button info' onClick={() => handleClick(movie)} >
+            More Information
+            
+          {modalOpen && (
+            <MovieModal {...moviesSelected} setModalOpen={setModalOpen} />
+          )}
            </button>
           </div>
          <p className='banner__description'>
@@ -80,15 +96,11 @@ const [isClicked , setIsClicked] = useState(false);
           height='360'
           frameborder='0'
           allow='autoplay; FullScreen'
-          
           ></Iframe>
-{/*                     <iframe width="560" height="315" src="https://www.youtube.com/embed/qoXf5Zr3BhA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> */}
-
         </HomeContainer>
       </Container>
     )
   }
-
 }
 
 const Container = styled.div`

@@ -8,6 +8,7 @@ const requests = {
   fetchAdventureMovies: "/discover/movie?with_genres=12",
   fetchScienceFictionMovies: "/discover/movie?with_genres=878",
   fetchAction: "/discover/movie?with_genres=28",
+  
 }
 
 export default requests;

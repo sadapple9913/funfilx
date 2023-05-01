@@ -8,16 +8,18 @@ import DetailPage from 'routes/DetailPage'
 import SearchPage from 'routes/SearchPage'
 import Auth from 'routes/Auth'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { faFontAwesome } from '@fortawesome/free-brands-svg-icons'
+import MyProfile from 'routes/MyProfile'
+import Edit from 'components/Edit'
+import Main from 'routes/Main'
+import CreateProfile from 'components/CreateProfile'
+import My from 'components/My'
 
-const Layout = () =>{
-  return (
-    <div>
-    <Nav />
-    <Outlet />
-    <Footer />
-    </div>
-  )
-}
+library.add(fas, faFontAwesome )
+
+
 // 중첩라우팅 부모 Layout 에  <Outlet /> 을 사용하면 자식경로 요소를 렌더링할수있다 <Outlet />  =           <Route path='' element={<MainPage />} />
 // path 대신 index를 쓰면 localhost:3000/ 이다 = 홈
 // search => localhost:3000/search index를 넣으면 기본값이 localhost:3000/ 바뀌어서 / 안해도됨
@@ -28,7 +30,21 @@ function App() {
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userObj, setUserObj] = useState('');
-  
+  const addProfile = (profile) => {
+    setProfiles((prevProfiles) => [...prevProfiles, profile]);
+  };
+  const [profiles, setProfiles] = useState([]);
+
+  const Layout = () =>{
+    return (
+      <div>
+      <Nav userObj={userObj}/>
+      <Outlet />
+      <Footer />
+      </div>
+    )
+  }
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -44,31 +60,27 @@ function App() {
 
   return (
     <div className='app'>
-      <Routes>
-      {isLoggedIn ? (
-        <Route path='/' element={<Layout />}>
-          <Route index element={<MainPage />} />
-          <Route path=':movieId' element={<DetailPage />} />
-          <Route path='search' element={<SearchPage />} />
-          {/* profile 페이지 만들기 */}
-        </Route>
-        ) : (
-        <Route exact path="/" element={<Auth />} />
-        )}
-      </Routes>
+      {init ? (
+        <Routes>
+          {isLoggedIn ? (
+            <>
+              <Route path="/" element={<MyProfile userObj={userObj} />} />
+              <Route path="/Main" element={<Main userObj={userObj} />} />
+              <Route path='/Edit' element={<Edit userObj={userObj} />} />
+              <Route path='/My' element={<My userObj={userObj}  />} />
+              <Route path='/CreateProfile' element={<CreateProfile userObj={userObj} addProfile={addProfile} />} />
+              <Route path='/Nav' element={<Nav userObj={userObj} />} />
+              <Route path=':movieId' element={<DetailPage />} />
+              <Route path='search' element={<SearchPage userObj={userObj}/>} />
+            </>
+          ) : (
+            <Route exact path="/" element={<Auth />} />
+          )}
 
-
-
-      {/* <Nav />
-      <Banner />
-      <Row title="NETFILX_ORIGINALS" id="NO" fetchUrl={requests.fetchNetflixOriginals} isLargeRow/>
-      <Row title="Trending" id="TN" fetchUrl={requests.fetchTrending}  />
-      <Row title="Top Rated" id="TR" fetchUrl={requests.fetchTopRated} />
-      <Row title="Animation Movie" id="AM" fetchUrl={requests.fetchAnimationMovies} />
-      <Row title="Adventure Movie" id="DM" fetchUrl={requests.fetchAdventureMovies} />
-      <Row title="Science Fiction Movie" id="SM" fetchUrl={requests.fetchScienceFictionMovies} />
-      <Row title="Action Movie" id="CM" fetchUrl={requests.fetchAction} />
-      <Footer /> */}
+        </Routes>
+      ) : (
+        'Initializing...'
+      )}
     </div>
   )
 }
