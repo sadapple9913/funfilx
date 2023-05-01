@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/funflix/static/css/main.53fde04e.css",
-    "main.js": "/funflix/static/js/main.171eb344.js",
+    "main.js": "/funflix/static/js/main.bc5344be.js",
     "static/media/Netflix_Logo_RGB.png": "/funflix/static/media/Netflix_Logo_RGB.f4070143e1f521da82a1.png",
     "index.html": "/funflix/index.html",
     "main.53fde04e.css.map": "/funflix/static/css/main.53fde04e.css.map",
-    "main.171eb344.js.map": "/funflix/static/js/main.171eb344.js.map"
+    "main.bc5344be.js.map": "/funflix/static/js/main.bc5344be.js.map"
   },
   "entrypoints": [
     "static/css/main.53fde04e.css",
-    "static/js/main.171eb344.js"
+    "static/js/main.bc5344be.js"
   ]
 }
