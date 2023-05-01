@@ -62,7 +62,7 @@ console.log("newDisplayName ", newDisplayName )
     <>
     <div className="logo"></div>
       <section className="profile">
-      <h2>Netfilx를 시청할 프로필을 선택하세요.</h2>
+      <h2>Netfilx를 시청할 프로필을 선택하세요 . </h2>
           <h3 className="blind">My profile info</h3>
             <My 
             images={userObj.photoURL} userObj={userObj} 

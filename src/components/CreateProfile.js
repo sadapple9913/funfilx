@@ -89,7 +89,7 @@ function CreateProfile({ userObj, addProfile }) {
         <button type="submit" className="save" >
         저장
         </button>
-        <button className="back_button" onClick={() => navigate("/")}>취소</button>
+        <button className="back_button" onClick={() => navigate("/")}> 취소 </button>
       </form > 
       </div>    
 
