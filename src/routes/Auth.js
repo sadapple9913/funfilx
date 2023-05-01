@@ -33,9 +33,9 @@ function Auth() {
     try {
       let data;
       if (newAccout) {
-        data = createUserWithEmailAndPassword(auth, email, password);
-      } else {
         data = signInWithEmailAndPassword(auth, email, password);
+      } else {
+        data = createUserWithEmailAndPassword(auth, email, password);
       }
       console.log(data);
     } catch (error) {
@@ -43,6 +43,7 @@ function Auth() {
     }
   };
   const toggleAccount = () => setNewAccount((prev) => !prev);
+
   const onSocialClick = async (event) => {
     const {
       target: { name },
@@ -77,11 +78,11 @@ function Auth() {
           value={password}
           onChange={onChange}
         />
-        <input className="toggle"  type="submit" value={newAccout ? "회원가입" : "로그인"} />
+        <input className="toggle"  type="submit" value={newAccout ? "로그인" : "회원가입"} />
         {error}
       </form>
       <span onClick={toggleAccount} className="sign">
-        {newAccout ? "이미 회원이시라면 여기를 클릭해주세요." : "회원가입을 하시려면  여기를 여기를 클릭해주세요."}
+        {newAccout ? "회원가입을 하시려면  여기를 여기를 클릭해주세요." : "이미 회원이시라면 여기를 클릭해주세요."}
       </span>
       <div className="googleLogin">
         <span className="ather">또는</span>

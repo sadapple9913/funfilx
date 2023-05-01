@@ -11,9 +11,8 @@ const navigate = useNavigate("");
 console.log("userObj->",userObj)
 const [attachment ,setAttachment ] = useState("");
 
-const handleButtonClick = () => {
-  navigate('');
-};
+
+
 const [profiles, setProfiles] = useState([]);
   
     useEffect(() => {
@@ -35,14 +34,18 @@ const [profiles, setProfiles] = useState([]);
   return (
     <>
       <ul className="Profile__wrap">
-        {profiles.map((profile) => (
-          <li key={profile.id} className="Profile__box" onClick={() => navigate(`/Main`)}>
-            <span className="Profile__img">
-              <img src={profile.photoURL} alt="Profile Image"/>
-            </span>
-            <span className="Profile_name">{profile.name}</span>
-          </li>
-        ))}
+      {profiles.map((profile) => (
+        <li key={profile.id} className="Profile__box" onClick={() => navigate(`/Main`)}>
+          <span className="Profile__img">
+            {profile.photoURL ? (
+              <img src={profile.photoURL} alt="Profile Image" />
+            ) : (
+              <img src="../images/4d2d37bcc6a75ebd6f3dc60f6587206a.jpg" alt="Profile Image" />
+            )}
+          </span>
+          <span className="Profile_name">{profile.name}</span>
+        </li>
+      ))}
         
 
         <li className="Profile__box plus" onClick={() => navigate(`/CreateProfile`)}>
@@ -54,26 +57,6 @@ const [profiles, setProfiles] = useState([]);
           <span className="Profile_Plus">프로필 추가</span>
         </li>
       </ul>
-          {/* <div className="My__wrap">
-
-          <ul className="Profile__list">
-            {profiles.map((profile) => (
-              <li key={profile.id} className="Profile__box">
-                <span class="Profile__img">
-                  <img src={profile.photoURL} alt="Profile Image"/>
-                </span>
-                <span class="Profile_name">{profile.name}</span>
-              </li>
-            ))}
-            <li className="Profile__box" onClick={() => navigate('/Main')}>
-              <span class="Profile__img">
-                <FontAwesomeIcon icon="fa-solid fa-plus-circle" />
-              </span>
-              <span class="Profile_name">Add Profile</span>
-            </li>
-          </ul>
-          <CreateProfile userObj={userObj} addProfile={addProfile} />
-        </div> */}
         </>
   );
 }
