@@ -60,7 +60,7 @@ function Auth() {
       <div className="logo"></div>
       <div className="login_wrap">
       <form onSubmit={onSubmit} className="login">
-        <span className="login__title">로그인</span>
+        <span className="login__title"> 로그인 </span>
         <input className="email"
           name="email"
           type="text"
