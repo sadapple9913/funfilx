@@ -10,7 +10,7 @@ import { ref } from 'firebase/database';
 import { getDownloadURL, uploadString } from 'firebase/storage';
 
 
-function MyProfile({userObj}) {
+function Edit({userObj}) {
   const [newDisplayName , setNewDisplayName] = useState(userObj.displayName);
   const[attachment ,setAttachment ] = useState("");
   const navigate = useNavigate();
@@ -89,11 +89,8 @@ const onClearAttachment = () =>{
 console.log("attachment",attachment);
 console.log("newDisplayName ", newDisplayName )
 
-const handleButtonClick = () => {
-  navigate('');
-};
 
-  
+
  
 
   return (
@@ -102,10 +99,10 @@ const handleButtonClick = () => {
       <section className="profile">
       <h2>프로필을 수정하세요.</h2>
           <h3 className="blind">My profile info</h3>
-          <ul className="Profile__wrap">
+          <form className="Profile__wrap">
           {profiles.map((profile) => (
-          <li key={profile.id} className="Profile__box" onSubmit={onSubmit}>
-            <span className="Profile__img">
+          <div key={profile.id} className="Profile__box" onSubmit={onSubmit} >
+            <span className="Profile__img" onFileChange={onFileChange}>
               <img src={profile.photoURL} alt="Profile Image"/>
             </span>
             {newDisplayName ? (
@@ -113,23 +110,22 @@ const handleButtonClick = () => {
               ) : (
                 <input className="profileName" type="text" onChange={onChange}  placeholder={"name"}/>
               )}
-          </li>
+          </div>
         ))}
-          </ul>
-            <ul className="profile_menu">
-              <Link to="/Edit">
-              <li>
-                {/* <span className="icon">
-                </span> */}
-              완료
-              </li>
-              </Link>
-            </ul>
+              <div className="profile_menu">
+            <Link to="/">
+            <li>
+            완료
+            </li>
+            </Link>
+          </div>    
+          </form>
+
         </section>
 
         {attachment && ( //값이 있으면 true 다, 0 null 공백문자 undefind = false
               <div className="preview">
-                <img src={attachment} alt='' />
+                <img src={attachment} alt=''/>
                 <button className="remove" onClick={onClearAttachment}>
                 x
                 </button>
@@ -143,4 +139,4 @@ const handleButtonClick = () => {
   )
 }
 
-export default MyProfile;
+export default Edit;

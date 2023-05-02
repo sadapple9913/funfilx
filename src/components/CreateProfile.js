@@ -62,10 +62,6 @@ function CreateProfile({ userObj, addProfile }) {
     reader.readAsDataURL(theFile);
   };
 
-  const onClearAttachment = (e) => {
-    e.preventDefault();
-    setAttachment('');
-  };
   
 
   return (

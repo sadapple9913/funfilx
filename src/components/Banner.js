@@ -25,7 +25,6 @@ const [moviesSelected , setMoviesSelected] = useState((""));
 
   const fetchData = async() => {
     const request = await axios.get(requests.fetchNowPlaying); //axios라는 컴포넌트를 만들고 가져와서 데이터는 입력한걸 쓴다
-    const request2 = await axios.get()
     console.log(request);
 
     //200개 영화 중 영화 하나의 ID를 랜덤하게 가져오기
@@ -90,6 +89,7 @@ const [moviesSelected , setMoviesSelected] = useState((""));
     return(
       <Container>
         <HomeContainer>
+          <Exit onClick={() => setIsClicked(false)}>X</Exit>
           <Iframe
           src={`https://www.youtube.com/embed/${movie.videos.results[0]?.key}?controls=0&autoplay=1&loop=1&mute=1&playlist=${movie.videos.results[0]?.key}`}
           width='640'          
@@ -115,6 +115,16 @@ const HomeContainer = styled.div`
  width: 100%;
  height: 100%;
 `
+const Exit = styled.div`
+  z-index: 100;
+  color: #fff;
+  position: absolute;
+  top: 50px;
+  right: 100px;
+  font-size: 32px;
+  cursor: pointer;
+`
+
 const Iframe = styled.iframe`
  width: 100%;
  height: 100%;

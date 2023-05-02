@@ -3,7 +3,8 @@ import React, { useRef, useState, useEffect } from 'react'
 import "styles/MovieModal.css"
 import axios from 'api/axios';
 import styled from 'styled-components'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 function MovieModal({setModalOpen, backdrop_path, release_date, overview, title, name, vote_average, first_air_date, id }) {
   const ref = useRef();
@@ -41,7 +42,8 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
           <span className='modal-close' onClick={() => {
             setModalOpen(false);
             setShowIframe(false);
-          }}>X</span>
+          }}>X
+          </span>
           {showIframe ? (
             <Iframe
               src={`https://www.youtube.com/embed/${videoId}?controls=0&autoplay=1&loop=1&mute=1&playlist=${videoId}`}
@@ -51,7 +53,10 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
               allow='autoplay; FullScreen'
             />
           ) : (
-            <img className='modal__poster-img' alt={title ? title : name} src={`https://image.tmdb.org/t/p/original/${backdrop_path}`} onClick={handleImageClick} />
+            <div onClick={handleImageClick}>
+            <img className='modal__poster-img' alt={title ? title : name} src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}/>
+            <div className='play_icon'><FontAwesomeIcon icon="fa-solid fa-play"/></div>
+            </div>
           )}
           <div className='modal__content'>
             <p className='modal__details'>

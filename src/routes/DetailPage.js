@@ -47,6 +47,7 @@ function DetailPage() {
       <div className='movie__info'>
       <img className='movie__poster__img'
        src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} alt={movie.title || movie.name || movie.original_name} />
+      <div className='movie__detail__box'>
       <h1 className='movie__title'>{movie.title}</h1>
       <p className='movie__overview'>{movie.overview}</p>
       <p className='movie__details'><span>평점 : </span>{movie.vote_average} 점</p>
@@ -54,6 +55,7 @@ function DetailPage() {
       <span>100% for you</span>
       </span>
       <p className='movie__genres'>{movie.genres}</p>
+      </div>
       </div>
     </section>
 

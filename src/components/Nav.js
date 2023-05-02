@@ -34,20 +34,19 @@ function Nav({userObj}) {
 
   useEffect(() => {
     const q = query(collection(db, "profiles"), 
- /*    where("name", "==", userObj.displayName) */);
+    where("name", "==", userObj.displayName));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const documents = querySnapshot.docs.map(doc => doc.data());
-      setProfiles(documents);
-      if (documents.length > 0) {
-        const profile = documents[0];
-        userObj.photoURL = profile.photoURL;
-        console.log("userObj updated:", userObj);
-      }
+      querySnapshot.forEach((doc) => {
+        const profile = doc.data();
+        if (profile) {
+          userObj.photoURL = profile.photoURL;
+          console.log("userObj updated:", userObj);
+        }
+      });
     });
     return unsubscribe;
   }, [userObj]);
 
-  where("name", "==", userObj.displayName)
   const onChange = (e) => {
     setSearchValue(e.target.value);
     navigate(`/search?q=${e.target.value}`)
