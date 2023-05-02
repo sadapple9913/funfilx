@@ -1,9 +1,61 @@
 /* html,body{width: 100%;height: 100%;} */
 
 .search-container{width: 100%;text-align: center;padding: 5rem 0 ;background: #000;}
-.movie{display: inline-block;padding-left: 0.5rem;padding-bottom: 7rem;}
-.movie__column-poster{cursor: pointer;transition: transform 0.3s ease 0s;}
+.movie{display: inline-block;padding-left: 0.5rem;  padding-bottom: 7rem;}
+.movie__column-poster{cursor: pointer;transition: transform 0.3s ease 0s; color: #fff;}
 .movie__column-poster:hover{transform: scale(1.25);}
 .movie__poster{width: 90%;border-radius: 5px;}
 
 .no-results{display: flex;justify-content: center;align-content: center; height: 100%;padding: 8rem;color: #c5c5c5;}
+
+.movie__tooltip {
+  display: none;
+  width: 90%;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  left: 50%;transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 8px 0;
+  font-size: 14px;
+  transition: all 0.2s ease 0s;
+}
+
+.movie__poster-wrapper:hover .movie__tooltip {
+display: block;
+}
+
+.tooltip__title{
+  font-size: 20px;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.tooltip__genres{
+  position: relative;
+  top: 5px;
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  font-weight: bold;
+  padding: 8px 0;
+  text-align: left;
+  margin-left: 20px;
+}
+
+.tooltip__vote{
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  font-weight: bold;
+  font-size: 12px;
+}
+.tooltip__vote>span{color: #46d369;}
+
+.tooltip__popularity{
+  position: absolute;
+  bottom: 20px;
+  left: 40%;
+  font-weight: bold;
+  font-size: 12px;
+}

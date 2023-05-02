@@ -66,7 +66,7 @@ function Nav({userObj}) {
 
     <nav className={`nav ${show && "nav__black"}`}>
       <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png' alt='netfilx logo' className='nav__logo' 
-      onClick={() => {window.location.href="/funflix"}}/>
+      onClick={() => {window.location.href="/funflix/Main"}}/>
 
       <input tpye="sreach" placeholder='영화를 검색해주세요' className='nav__input' onChange={onChange} value={searchValue} />
       
