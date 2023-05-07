@@ -15,10 +15,10 @@ align-items: center;transition: all 0.5s ease-in 0s;}
 
 .profile_wrap{
   position: relative;
-  top: 220px;
+  top: 150px;
   right: 90px;
   width: 220px;
-  height: 350px;
+  height: 265px;
   border: 1px solid rgba(255,255,255,0.2);
   background: #000;
 }

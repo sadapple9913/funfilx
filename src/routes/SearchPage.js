@@ -102,7 +102,10 @@ function SearchPage({userObj}) {
                         <p className="tooltip__title">{movie.title || movie.name || movie.original_name}</p>
                         <p className="tooltip__genres">{movieGenres}</p>
                         <p className="tooltip__vote"><span>평점 </span>: {movie.vote_average}</p>
-                        <p className='tooltip__popularity'>{movie.popularity}</p>
+                        <p className='tooltip__popularity'>
+                          <span><FontAwesomeIcon icon="fa-solid fa-heart" />
+                          </span> 
+                          {movie.popularity}</p>
                       </div>
                     </div>
                   </div>

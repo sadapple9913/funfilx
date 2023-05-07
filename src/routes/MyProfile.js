@@ -70,8 +70,6 @@ console.log("newDisplayName ", newDisplayName )
             <ul className="profile_menu">
               <Link to="/Edit">
               <li>
-                {/* <span className="icon">
-                </span> */}
                 프로필 관리
               </li>
               </Link>

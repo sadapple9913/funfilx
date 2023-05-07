@@ -1,7 +1,7 @@
 import axios from 'api/axios';
 import React, { useEffect, useState } from 'react'
 import MovieModal from './MovieModal';
-import MiniMovieModal from '../components/MiniMovieModal';
+import MiniMovieModal from './MiniMovieModal';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -9,54 +9,38 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import "../styles/Row.css"
-import { useParams } from 'react-router-dom';
 
 function Row({isLargeRow, title, id , fetchUrl}) {
-  const [movie, setMovie] = useState({});
   const [movies, setMovies] = useState([]);
   const [modalOpen , setModalOpen] = useState(false);
-  const [miniModalOpen , setMiniModalOpen] = useState(false);
-  const [moviesSelected , setMoviesSelected] = useState("");
-  const [hoveredMovie, setHoveredMovie] = useState(null);
-  const [genres, setGenres] = useState([]);
-  const { movieId } = useParams(); 
-
+  const [minimodalOpen , setMiniModalOpen] = useState(false);
+  const [moviesSelected , setMoviesSelected] = useState((""));
 
   const fetchMovieData = async() =>{
-   const request = await axios.get(fetchUrl);
-   setMovies(request.data.results);
-   console.log(request);
-   setMovies(request.data.results);
-   
+    const request = await axios.get(fetchUrl);
+    setMovies(request.data.results);
+    console.log(request);
+    setMovies(request.data.results);
   }
   
   useEffect(() => {
     fetchMovieData();
   },[fetchUrl]);
 
-
   const handleClick = (movie) =>{
-    console.log("movie->",movie)
     setModalOpen(true);
     setMoviesSelected(movie);
   }
+  const handleMouseOver = (movie) =>{
+    setMiniModalOpen(true);
+    setMoviesSelected(movie);
+  }
   
-  const handleMouseOver = (event, movie) => {
-    setHoveredMovie(movie);
-    
-  };
-
-  const handleMouseLeave = (event, movie) => {
-    setHoveredMovie(null);
-  };  
-  
-
-
   return (
-    
     <section className='row' key={id}>
       <h2>{title}</h2>
       <Swiper
+        wrapperClassName="swiper-wrapper"
         modules={[Navigation, Pagination, Scrollbar, A11y]}
         navigation  
         pagination={{ clickable: true }}
@@ -78,53 +62,41 @@ function Row({isLargeRow, title, id , fetchUrl}) {
         }
         
         }}
+        wrapperProps={{
+          style: { overflow: 'visible !important' }
+        }}
       >
-
-          <div id={id} className='row__posters'>
-            
+        
+        <div id={id} className='row__posters'>
           {movies.map((movie) => (
-            <SwiperSlide key={movie.id}>
+            <SwiperSlide>
               <div
-                className="row__poster-container"
-                onMouseOver={(event) => handleMouseOver(event, movie)}
-                onMouseLeave={(event) => handleMouseLeave(event, movie)}
+                key={movie.id}
+                className="row__posterWrapper"
+                onMouseOver={() => setMoviesSelected(movie)}
+                onMouseLeave={() => setMoviesSelected("")}
               >
                 <img
-                  onClick={() => handleClick(movie)}
+                  onClick={() => setModalOpen(true)}
                   className={`row__poster ${isLargeRow && "row__posterLarge"}` }
                   src={`https://image.tmdb.org/t/p/original/${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
                   loading='lazy'
                   alt={movie.title || movie.name || movie.original_name }
                 />
-                {hoveredMovie && hoveredMovie.id === movie.id && (
-                  
-                <div className="row__poster-info">
-                  <img className={`row__poster ${isLargeRow && "row__posterLarge"}` }
-                  src={`https://image.tmdb.org/t/p/original/${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
-                  loading='lazy'></img>
-                <div className='row__tooltip'>
-                  <h2>{hoveredMovie.title || hoveredMovie.name || hoveredMovie.original_name}</h2>
-                  <p className='tooltip__genres'></p>
-                  <p><span>평점</span>: {hoveredMovie.vote_average}</p>
-                </div>
-                </div>
-              )}
+                {moviesSelected === movie && (
+                  <MiniMovieModal {...movie} setModalOpen={setMiniModalOpen} />
+                )}
               </div>
-              </SwiperSlide>
-            ))}
-          </div>
-
-          </Swiper>
-
+            </SwiperSlide>
+          ))}
+        </div>
+      </Swiper>
 
       {modalOpen && (
         <MovieModal {...moviesSelected} setModalOpen={setModalOpen} />
       )}
-      
     </section>
   )
 }
-
-
 
 export default Row

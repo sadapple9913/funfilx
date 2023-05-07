@@ -50,10 +50,11 @@ z-index: 1000; position: absolute;top: 0;width: 80px;height: 100%;cursor: pointe
 .swiper-pagination-bullet{background: #fff !important;}
 
 .row__poster-info{
-  width: 400px;
-  height: 350px;
-  position: relative;
-  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: -0px;
   left: 50%;transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
@@ -62,4 +63,20 @@ z-index: 1000; position: absolute;top: 0;width: 80px;height: 100%;cursor: pointe
   transition: all 0.2s ease 0s;
 }
 
+.row__tooltip{
+  position: absolute;
+  bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* .swiper__wrap{
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+overflow: none;
+  list-style: none;
+  padding: 0;
+  z-index: 1;
+  display: block;
+} */
 

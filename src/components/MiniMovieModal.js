@@ -1,17 +1,18 @@
 import useOnClickOutside from 'api/Hooks/useOnClickOutside';
 import React, { useRef, useState, useEffect } from 'react'
-import "styles/MovieModal.css"
+import "styles/MiniMovieModal.css"
 import axios from 'api/axios';
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-
-function MiniMovieModal({setModalOpen, backdrop_path, release_date, overview, title, name, vote_average, first_air_date, id}) {
+function MiniMovieModal({setMiniModalOpen, backdrop_path, release_date, overview, title, name, vote_average, first_air_date, id }) {
   const ref = useRef();
   const [videoId, setVideoId] = useState("");
   const [showIframe, setShowIframe] = useState(false);
 
   useOnClickOutside(ref , () =>{
-    setModalOpen(false)
+    setMiniModalOpen(false)
   });
 
   const handleImageClick = () => {
@@ -39,9 +40,10 @@ function MiniMovieModal({setModalOpen, backdrop_path, release_date, overview, ti
       <div className='wrapper-modal'>
         <div className='modal' ref={ref}>
           <span className='modal-close' onClick={() => {
-            setModalOpen(false);
+            setMiniModalOpen(false);
             setShowIframe(false);
-          }}>X</span>
+          }}>
+          </span>
           {showIframe ? (
             <Iframe
               src={`https://www.youtube.com/embed/${videoId}?controls=0&autoplay=1&loop=1&mute=1&playlist=${videoId}`}
@@ -51,7 +53,10 @@ function MiniMovieModal({setModalOpen, backdrop_path, release_date, overview, ti
               allow='autoplay; FullScreen'
             />
           ) : (
-            <img className='modal__poster-img' alt={title ? title : name} src={`https://image.tmdb.org/t/p/original/${backdrop_path}`} onClick={handleImageClick} />
+            <div onClick={handleImageClick}>
+            <img className='modal__poster-img' alt={title ? title : name} src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}/>
+            <div className='play_icon'><FontAwesomeIcon icon="fa-solid fa-play"/></div>
+            </div>
           )}
           <div className='modal__content'>
             <p className='modal__details'>
@@ -60,7 +65,7 @@ function MiniMovieModal({setModalOpen, backdrop_path, release_date, overview, ti
             </p>
             <h2 className='modal__title'>{title ? title : name}</h2>
             <p className='modal__details'> 평점 : {vote_average}</p>
-            <p className='modal__overview'>{overview}</p>
+            
             {/* 스틸컷 나오게  */}
           </div>
         </div>

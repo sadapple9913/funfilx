@@ -53,9 +53,15 @@ display: block;
 .tooltip__vote>span{color: #46d369;}
 
 .tooltip__popularity{
-  position: absolute;
-  bottom: 20px;
+  position: relative;
+  bottom: -5px;
   left: 40%;
   font-weight: bold;
   font-size: 12px;
+}
+
+.tooltip__popularity>span{
+  color: #ff4754;
+  margin-right: 5px;
+  font-size: 16px;
 }

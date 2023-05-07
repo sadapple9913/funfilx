@@ -52,16 +52,11 @@ gap: 10px;
   color: #fff;
 }
 
-.profile_menu{
-  position: relative;
-  top: 90px;
-}
 
-.profile_menu>a>li{
-position: relative;
-left: 50%;
-top: 50px;
-transform: translateX(-50%);
+.Edit__profile_menu>a>div{
+position: absolute;
+left: 30%;
+top: 400px;
 color: #ccc;
 font-size: 28px;
 width: 200px;
@@ -69,25 +64,19 @@ padding: 5px;
 border: 1px solid #ccc;
 }
 
-.Profile_Plus{
-  margin-top: 13px;
-  font-size: 20px;
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 600;
+#check_btn{
+position: absolute;
+margin: 10px;
 }
-/* .plus__profile>span{
-  position: relative;
-  color: #fff;
-} */
 
-.Profile__box.plus{
-  position: relative;
-}
-.plus__icon{
+.delete{
   position: absolute;
-  left: 50%;
-  bottom:calc(50% - 50px);
-  transform: translateX(-50%);
-  font-size: 100px;
-  color: rgba(0, 0, 0, 0.5);
+  left: 51%;
+  top: 400px;
+  color: #ccc;
+  font-size: 28px;
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  background: #111;
 }

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import 'styles/Nav.css'
-import { signOut, } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import {auth, db} from '../fbase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faUser , faPenToSquare , faCircleQuestion} from '@fortawesome/free-regular-svg-icons'
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 
 
 function Nav({userObj}) {
@@ -13,8 +13,9 @@ function Nav({userObj}) {
   const [searchValue , setSearchValue] = useState("");
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false); 
+  const [profileData, setProfileData] = useState({});
   const [profiles, setProfiles] = useState([]);
-
+  
   console.log("userObj->>",userObj)
 
   useEffect(() =>{
@@ -33,19 +34,20 @@ function Nav({userObj}) {
   },[])
 
   useEffect(() => {
-    const q = query(collection(db, "profiles"), 
-    where("name", "==", userObj.displayName));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        const profile = doc.data();
-        if (profile) {
-          userObj.photoURL = profile.photoURL;
-          console.log("userObj updated:", userObj);
-        }
-      });
+    const q = query(collection(db, 'profiles'), where("userID", "==", userObj.uid));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const profileList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        name: doc.data().name,
+        photoURL: doc.data().photoURL
+      }));
+      setProfiles(profileList);
     });
-    return unsubscribe;
-  }, [userObj]);
+    return () => {
+      unsubscribe();
+    };
+  }, [userObj.uid]);
+
 
   const onChange = (e) => {
     setSearchValue(e.target.value);
@@ -61,7 +63,6 @@ function Nav({userObj}) {
     setProfileOpen(!profileOpen);
   }
 
-
   return (
 
     <nav className={`nav ${show && "nav__black"}`}>
@@ -70,7 +71,7 @@ function Nav({userObj}) {
 
       <input tpye="sreach" placeholder='영화를 검색해주세요' className='nav__input' onChange={onChange} value={searchValue} />
       
-      <img src={userObj.photoURL} alt='User logged' className='nav__avatar' onClick={onClick}/>
+      <img src={profileData.photoURL} alt='User logged' className='nav__avatar' onClick={onClick}/>
       
       <div className='open_icon'></div>
       
@@ -78,7 +79,7 @@ function Nav({userObj}) {
       <div className='profile_wrap'>
         <div className='nav__profile'>   
         <img src={userObj.photoURL} alt='profile image' className='nav__profile__image'/>
-        <p className='nav__profile__name'>{userObj.displayName}</p>
+        <p className='nav__profile__name'>{userObj.name}</p>
         </div>
         
         <span className='profile_icon'>
