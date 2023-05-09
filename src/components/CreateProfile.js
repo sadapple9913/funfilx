@@ -10,7 +10,7 @@ import {useNavigate } from 'react-router-dom';
 function CreateProfile({ userObj, addProfile }) {
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const [attachment, setAttachment] = useState('');
-  const [photoURL, setPhotoURL] = useState(userObj.photoURL); // 생성된 프로필의 이미지 URL을 상태 변수로 관리
+  const [photoURL, setPhotoURL] = useState(userObj.photoURL); 
   const navigate = useNavigate('');
 
   
@@ -29,17 +29,17 @@ function CreateProfile({ userObj, addProfile }) {
         attachmentUrl = await getDownloadURL(ref(storage, response.ref));
       }
 
-      // Firestore에 새로운 프로필 추가
+
       const docRef = await addDoc(collection(db, "profiles"), {
-        name: newDisplayName,
+        displayName: newDisplayName,
         photoURL:attachmentUrl !== "" ? attachmentUrl : userObj.photoURL,
         userID: userObj.uid
       });
 
-      // addProfile 함수를 호출하여 새로운 프로필 추가
+
       addProfile({
-        id: docRef.uid,
-        name: newDisplayName,
+        id: docRef.id,
+        displayName: newDisplayName,
         photoURL: attachmentUrl || userObj.photoURL
       });
 

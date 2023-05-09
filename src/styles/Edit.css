@@ -29,7 +29,7 @@ gap: 10px;
 .Profile__box{
   display: flex;
   flex-direction: column;
-  width: 19%;
+  width: 200px;
   height: 181px;
   background: url(../images/empty.jpg)no-repeat 0 0;
   background-size: cover;
@@ -42,7 +42,7 @@ gap: 10px;
 }
 
 .Profile__img>img{
-  width: 100%;
+  width: 200px;
   height: 182.39px;
 }
 
@@ -53,9 +53,9 @@ gap: 10px;
 }
 
 
-.Edit__profile_menu>a>div{
+.done{
 position: absolute;
-left: 30%;
+left: calc(50% - 220px);
 top: 400px;
 color: #ccc;
 font-size: 28px;
@@ -64,14 +64,9 @@ padding: 5px;
 border: 1px solid #ccc;
 }
 
-#check_btn{
-position: absolute;
-margin: 10px;
-}
-
 .delete{
   position: absolute;
-  left: 51%;
+  left: 50%;
   top: 400px;
   color: #ccc;
   font-size: 28px;
@@ -79,4 +74,41 @@ margin: 10px;
   padding: 5px;
   border: 1px solid #ccc;
   background: #111;
+}
+#check_btn{
+position: absolute;
+margin: 10px;
+}
+
+.profileName{
+  position: relative;
+  top: -30px;
+  color: #ccc;
+  font-size: 28px;
+  width: 188.5px;
+  padding: 2px 5px;
+  border: 1px solid #ccc;
+  background: #111;
+}
+
+.selectPhoto{
+  position: relative;
+  top: -40px;
+  left: 80px;
+  display: inline-block;
+  width: 60px;
+  height: 20px;
+  cursor: pointer;
+
+}
+.selectPhoto>svg{
+  font-size: 24px;
+  box-shadow: 1px 1px 2px #111;
+  border-radius: 5px;
+  background: rgba(0,0,0,0.1);;
+  color: rgba(255,255,255,0.9);
+}
+.Select__File{
+  text-indent: -9999px;
+  overflow: hidden;
 }

@@ -6,11 +6,11 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-function MovieModal({setModalOpen, backdrop_path, release_date, overview, title, name, vote_average, first_air_date, id }) {
+function MovieModal({setModalOpen, backdrop_path, release_date, overview, title, name, vote_average, first_air_date, id  }) {
   const ref = useRef();
   const [videoId, setVideoId] = useState("");
   const [showIframe, setShowIframe] = useState(false);
-
+ 
   useOnClickOutside(ref , () =>{
     setModalOpen(false)
   });
@@ -66,7 +66,6 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
             <h2 className='modal__title'>{title ? title : name}</h2>
             <p className='modal__details'> 평점 : {vote_average}</p>
             <p className='modal__overview'>{overview}</p>
-            
             {/* 스틸컷 나오게  */}
           </div>
         </div>

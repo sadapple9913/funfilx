@@ -1,0 +1,35 @@
+.presentation {
+  z-index: 1200 !important;
+  position: absolute;
+}
+.wrapper-modal.Mini{z-index: 1000 !important; position: relative;left: -30px;top: -250px; width: 120%;height: 100%; display: flex; justify-content: center; background-color: rgba(0,0,0,0.71);}
+
+.modal{position: relative; max-width: 800px;background: #111;overflow: hidden;
+border-radius: 8px;box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2), 
+0px 5px 8px 0px rgba(0,0,0,0.14) , 0px 1px 14px 0px rgba(0,0,0,0.12);
+animation: fadeIn 400ms ease 0s;}
+
+
+
+@keyframes fadeIn{
+  0%{opacity: 0;transform: scale(0.5);}
+  100%{opacity: 1;transform: scale(1);}
+}
+
+.modal-close{z-index: 1000;position: absolute;right: 20px;top: 20px;cursor: pointer; font-weight: 600;}
+.play_icon.Mini{position: absolute; left: 95%; top: 0; width: 40px;height: 40px; background: rgba(0,0,0,0.6);  border-radius: 50%; text-align: center; cursor: pointer;}
+.play_icon.Mini>svg{position: relative;top: -8px; font-size: 28px;}
+.modal__poster-img{width: 100%;}
+.modal__content.Mini{padding: 10px;}
+.modal__details.Mini{display: flex;justify-content: space-between; font-size: 16px; font-weight: 600; }
+.modal__user_perc.Mini{color: #46d369;}
+
+.modal__title.Mini{font-size: 24px; margin: 16px 0; padding: 0;}
+.modal__detail.Mini{font-size: 18px;font-weight: 600;padding-bottom: 5px;}
+
+@media screen and (max-width: 768px) {
+  .modal{overflow-y: scroll !important;}
+  .modal::-webkit-scrollbar{display: none;}
+  .modal__details{font-size: 16px;}
+  .modal__overview{font: 16px;}
+}

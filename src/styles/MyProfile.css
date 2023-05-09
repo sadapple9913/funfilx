@@ -37,6 +37,8 @@ gap: 10px;
 }
 
 .Profile__box>a{
+  width: 100%;
+  height: 182.39px;
   text-indent: -9999px;
   overflow: hidden;
 }

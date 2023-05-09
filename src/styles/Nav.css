@@ -9,16 +9,16 @@ align-items: center;transition: all 0.5s ease-in 0s;}
 
 .nav__logo{position: fixed;left: 40px;width: 80px;object-fit: contain;}
 
-.nav__avatar{position: fixed;right: 80px;width: 30px;object-fit: contain;}
+.nav__avatar{position: fixed;right: 80px;width: 35px;height: 35px; object-fit: cover;}
 
 .nav__input{position: fixed;left: 50%; transform: translateX(-50%);padding: 5px;border: none;background-color: rgba(0,0,0,0.582);border-radius: 5px; color:#fff;}
 
 .profile_wrap{
   position: relative;
-  top: 150px;
+  top: 170px;
   right: 90px;
   width: 220px;
-  height: 265px;
+  height: 253px;
   border: 1px solid rgba(255,255,255,0.2);
   background: #000;
 }
@@ -68,7 +68,11 @@ font-size: 18px;
 .nav__profile__image{
   width: 30px;height: 30px;
 }
+.profile_edit{
+  padding: 5px 0 15px 20px !important;
+}
 .nav__profile__name{
-  margin-left: 10px;
+  margin-left: 20px;
+  padding-top: 5px;
   color: #fff;
 }

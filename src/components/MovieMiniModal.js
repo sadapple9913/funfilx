@@ -1,23 +1,33 @@
 import useOnClickOutside from 'api/Hooks/useOnClickOutside';
 import React, { useRef, useState, useEffect } from 'react'
-import "styles/MiniMovieModal.css"
+import "styles/MovieMiniModal.css"
 import axios from 'api/axios';
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import MovieModal from './MovieModal';
+import { useNavigate } from 'react-router-dom';
 
-function MovieMiniModal({setMiniModalOpen, backdrop_path, release_date, overview, title, name, vote_average, first_air_date, id }) {
+function MovieMiniModal({setMiniModalOpen, backdrop_path, release_date, overview, title, name, vote_average, first_air_date, id,disableClick}) {
   const ref = useRef();
   const [videoId, setVideoId] = useState("");
   const [showIframe, setShowIframe] = useState(false);
+  const [genres, setGenres] = useState([]);
+  const [modalOpen , setModalOpen] = useState(false);
+  const [popularity, setPopularity] = useState(null);
+  const navigate = useNavigate("");
 
   useOnClickOutside(ref , () =>{
     setMiniModalOpen(false)
   });
 
-  const handleImageClick = () => {
-    setShowIframe(true);
-  }
+  const handleClick = () => {
+    if (!disableClick && id) {
+      navigate(`/${id}`);
+    } else {
+      console.log("Navigation disabled or no movie data available.");
+    }
+  };
 
   useEffect(() => {
     const fetchVideo = async () => {
@@ -30,43 +40,61 @@ function MovieMiniModal({setMiniModalOpen, backdrop_path, release_date, overview
       } catch (error) {
         console.log(error);
       }
+
+      try {
+        const response = await axios.get(`/movie/${id}`);
+        console.log(response.data); // Check response
+        if (response.data) {
+          if (response.data.genres) {
+            setGenres(response.data.genres);
+          } else {
+            setGenres([]);
+          }
+          if (response.data.popularity) {
+            setPopularity(response.data.popularity);
+          } else {
+            setPopularity(null);
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
     fetchVideo();
   }, [id]);
 
 
   return (
-   <div className='presentation'>
-      <div className='wrapper-modal'>
-        <div className='modal' ref={ref}>
-          <span className='modal-close' onClick={() => {
-            setMiniModalOpen(false);
-            setShowIframe(false);
-          }}>X
-          </span>
-          {showIframe ? (
-            <Iframe
-              src={`https://www.youtube.com/embed/${videoId}?controls=0&autoplay=1&loop=1&mute=1&playlist=${videoId}`}
-              width='640'
-              height='360'
-              frameborder='0'
-              allow='autoplay; FullScreen'
-            />
-          ) : (
-            <div onClick={handleImageClick}>
+   <div className='presentation' >
+      <div className='wrapper-modal Mini'>
+        <div className='modal Mini'>
+            <div>
             <img className='modal__poster-img' alt={title ? title : name} src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}/>
-            <div className='play_icon'><FontAwesomeIcon icon="fa-solid fa-play"/></div>
+            <div className='play_icon Mini' onClick={handleClick} >
+            <FontAwesomeIcon icon="fa-solid fa-plus" />
             </div>
-          )}
-          <div className='modal__content'>
-            <p className='modal__details'>
-              <span className='modal__user_perc'>100% for you</span> {" "}
-              {release_date ? release_date : first_air_date}
+            </div>
+          <div className='modal__content Mini'>
+            <p className='modal__details Mini'>
+              <span className='modal__user_perc Mini'>100% for you</span>
+              <span>{release_date ? release_date : first_air_date}</span>
             </p>
-            <h2 className='modal__title'>{title ? title : name}</h2>
-            <p className='modal__details'> 평점 : {vote_average}</p>
-            
-            {/* 스틸컷 나오게  */}
+            <p className="modal__genres">
+              {genres.map((genre, index) => (
+                <span key={genre.id}>
+                  {genre.name}
+                  {index < genres.length - 1 ? " | " : ""}
+                </span>
+              ))}
+            </p>
+            <h2 className='modal__title Mini'>{title ? title : name}</h2>
+            <p className='modal__detail Mini'> 평점 : {vote_average}</p>
+            <p  className='tooltip__popularity'>
+            <span>
+              <FontAwesomeIcon icon="fa-solid fa-heart" />
+            </span> 
+              {popularity}
+              </p>
           </div>
         </div>
       </div>

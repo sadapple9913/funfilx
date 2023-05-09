@@ -1,7 +1,7 @@
 import axios from 'api/axios';
 import React, { useEffect, useState } from 'react'
 import MovieModal from './MovieModal';
-import MiniMovieModal from './MiniMovieModal';
+import MovieMiniModal from './MovieMiniModal';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -10,10 +10,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import "../styles/Row.css"
 
-function Row({isLargeRow, title, id , fetchUrl}) {
+function Row({isLargeRow, title, id , fetchUrl , disableClick}) {
   const [movies, setMovies] = useState([]);
   const [modalOpen , setModalOpen] = useState(false);
-  const [minimodalOpen , setMiniModalOpen] = useState(false);
+  const [modalMiniOpen , setModalMiniOpen] = useState(false);
   const [moviesSelected , setMoviesSelected] = useState((""));
 
   const fetchMovieData = async() =>{
@@ -31,8 +31,9 @@ function Row({isLargeRow, title, id , fetchUrl}) {
     setModalOpen(true);
     setMoviesSelected(movie);
   }
+  
   const handleMouseOver = (movie) =>{
-    setMiniModalOpen(true);
+    setModalMiniOpen(true);
     setMoviesSelected(movie);
   }
   
@@ -71,21 +72,28 @@ function Row({isLargeRow, title, id , fetchUrl}) {
           {movies.map((movie) => (
             <SwiperSlide>
               <div
-                key={movie.id}
-                className="row__posterWrapper"
-                onMouseOver={() => setMoviesSelected(movie)}
-                onMouseLeave={() => setMoviesSelected("")}
+                  key={movie.id}
+                  className="row__posterWrapper"
+                  onMouseOver={() => handleMouseOver(movie)}
+                  onMouseLeave={() => setMoviesSelected("")}
+                  style={{ position: "relative" }}
               >
-                <img
-                  onClick={() => setModalOpen(true)}
-                  className={`row__poster ${isLargeRow && "row__posterLarge"}` }
-                  src={`https://image.tmdb.org/t/p/original/${isLargeRow ? movie.poster_path : movie.backdrop_path}`}
-                  loading='lazy'
-                  alt={movie.title || movie.name || movie.original_name }
+                <img 
+                key={movie.id}
+                className={`row__poster `}
+                src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
+                loading='lazy'
+                alt={movie.title || movie.name || movie.original_name}
                 />
+
                 {moviesSelected === movie && (
-                  <MiniMovieModal {...movie} setModalOpen={setMiniModalOpen} />
+                  <MovieMiniModal
+                    {...movie}
+                    setModalOpen={setModalMiniOpen}
+                    disableClick={disableClick}
+                  />
                 )}
+                                
               </div>
             </SwiperSlide>
           ))}

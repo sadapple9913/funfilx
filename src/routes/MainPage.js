@@ -9,7 +9,7 @@ function MainPage() {
   return (
       <div>
       <Banner />
-      <Row title="NETFILX ORIGINALS" id="NO" fetchUrl={requests.fetchNetflixOriginals} isLargeRow/>
+      <Row title="NETFILX ORIGINALS" id="NO" fetchUrl={requests.fetchNetflixOriginals} disableClick/>
       <Row title="Trending" id="TN" fetchUrl={requests.fetchTrending}  />
       <Row title="Top Rated" id="TR" fetchUrl={requests.fetchTopRated} />
       <Row title="Animation Movie" id="AM" fetchUrl={requests.fetchAnimationMovies} />

@@ -2,19 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CreateProfile from "./CreateProfile";
-import {
-  collection,
-  onSnapshot,
-  orderBy,
-  query,
-  where,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+import {collection,onSnapshot,orderBy,query,where,deleteDoc,doc,} from "firebase/firestore";
 import { db } from "fbase";
 
-function My({ images, userObj}) {
-  const navigate = useNavigate("");
+function My({userObj}) {
+  const navigate = useNavigate();
   const [attachment, setAttachment] = useState("");
   const [profiles, setProfiles] = useState([]);
 
@@ -28,6 +20,7 @@ function My({ images, userObj}) {
         id: doc.id,
         ...doc.data(),
       }));
+      console.log("my",profileList);
       setProfiles(profileList);
     });
     return () => {
@@ -35,40 +28,27 @@ function My({ images, userObj}) {
     };
   }, [userObj]);
 
-  const deleteProfile = async (profileId) => {
-    try {
-      await deleteDoc(doc(db, "profiles", profileId));
-      console.log("Profile successfully deleted!");
-    } catch (error) {
-      console.error("Error removing profile: ", error);
-    }
-  };
-
+  console.log("my",userObj);
   return (
     <>
       <ul className="Profile__wrap">
-        {profiles.map((profile) => (
-          <li
-            key={profile.id}
-            className="Profile__box"
-          >
-            <span className="Profile__img"             onClick={() => navigate(`/Main`)}>
-              {profile.photoURL ? (
+
+      {profiles.map((profile) => (
+
+        <li key={profile.id} className="Profile__box">
+
+          <Link to={{ pathname: "/Main", state: { selectedProfile: profile } }}  />
+
+            <span className="Profile__img" onClick={(e) => {
+            e.preventDefault();
+            navigate("/Main", { state: { selectedProfile: profile } });
+          }}>
                 <img src={profile.photoURL} alt="Profile Image" />
-              ) : (
-                <img
-                  src="../images/4d2d37bcc6a75ebd6f3dc60f6587206a.jpg"
-                  alt="Profile Image"
-                />
-              )}
             </span>
-            <span className="Profile_name">{profile.name}</span>
-            {/* <button onClick={() => deleteProfile(profile.id)}>Delete</button>
-            <button className="My__edit-btn" onClick={handleEditClick}>프로필 수정</button>
-          <button className="My__delete-btn" onClick={handleDeleteClick}>프로필 삭제</button> */}
-          </li>
-          
-        ))}
+
+            <span className="Profile_name">{profile.displayName}</span>
+        </li>
+      ))}
 
         <li
           className="Profile__box plus"

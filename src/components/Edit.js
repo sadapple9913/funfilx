@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import "../styles/Edit.css"
+import React, { useEffect, useState } from 'react';
+import "../styles/Edit.css";
 import { Link, useNavigate } from 'react-router-dom';
-import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore';
-import { updateProfile } from 'firebase/auth';
-import My from '../components/My';
+import { collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 import { db, storage } from 'fbase';
-import { ref } from 'firebase/database';
+import { ref } from 'firebase/storage';
 import { getDownloadURL, uploadString } from 'firebase/storage';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Edit({userObj}) {
-  const [newDisplayName , setNewDisplayName] = useState(userObj.displayName);
-  const [attachment, setAttachment] = useState(null);
   const navigate = useNavigate();
   const [profiles, setProfiles] = useState([]);
   const [selectedProfiles, setSelectedProfiles] = useState([]);
+  const [inputValues, setInputValues] = useState({});
 
   useEffect(() => {
     const q = query(collection(db, 'profiles'), where("userID", "==", userObj.uid));
@@ -24,10 +21,10 @@ function Edit({userObj}) {
         id: doc.id,
         ...doc.data()
       }));
+      console.log("edit",profileList);
       setProfiles(profileList);
     });
 
-    // cleanup 함수
     return () => {
       unsubscribe();
     };
@@ -65,74 +62,103 @@ function Edit({userObj}) {
     const { files } = e.target;
     if (files && files.length > 0) {
       const file = files[0];
-      const fileRef = ref(storage, `profileImages/${uuidv4()}`);
-      const snapshot = await uploadString(fileRef, file, "data_url");
-      const downloadURL = await getDownloadURL(snapshot.ref);
-
-      await updateDoc(doc(db, "profiles", profile.id), {
-        photoURL: downloadURL,
-      });
-
-      setProfiles((prevProfiles) => {
-        const index = prevProfiles.findIndex((p) => p.id === profile.id);
-        if (index === -1) return prevProfiles;
-        const updatedProfile = { ...prevProfiles[index], photoURL: downloadURL };
-        return [
-          ...prevProfiles.slice(0, index),
-          updatedProfile,
-          ...prevProfiles.slice(index + 1),
-        ];
-      });
-    }}
-   
+      const reader = new FileReader();
   
-  console.log("attachment",attachment);
-  console.log("newDisplayName ", newDisplayName )
+      reader.onloadend = async (finishedEvent) => {
+        const dataUrl = finishedEvent.target.result;
+        const fileRef = ref(storage, `profileImages/${uuidv4()}`);
+        const snapshot = await uploadString(fileRef, dataUrl, "data_url");
+        const downloadURL = await getDownloadURL(snapshot.ref);
   
-  return (
-    <>
-      <div className="logo"></div>
-      <section className="profile">
-        <h2>프로필을 수정하세요.</h2>
-        <h3 className="blind">My profile info</h3>
-        <form className="Profile__wrap">
-        
-          {profiles.map((profile) => (
-            <div key={profile.id} className="Profile__box">
-              <input
-                id='check_btn'
-                type="checkbox"
-                value={profile.id}
-                onChange={(e) => onChange(e, profile)}
-              />
-               {/* <label for="check_btn"><span>선택!</span></label> */}
-              <span className="Profile__img">
-                <img src={profile.photoURL} alt="Profile Image" />
-              </span>
-              {newDisplayName ? (
-                <input className="profileName" type="text" onChange={onChange} placeholder={newDisplayName} />
-              ) : (
-                <input className="profileName" type="text" onChange={onChange} placeholder={"name"} />
-              )}
-            </div>
-          ))}
+        await updateDoc(doc(db, "profiles", profile.id), {
+          photoURL: downloadURL,
+        });
+  
+        setProfiles((prevProfiles) => {
+          const index = prevProfiles.findIndex((p) => p.id === profile.id);
+          if (index === -1) return prevProfiles;
+          const updatedProfile = { ...prevProfiles[index], photoURL: downloadURL };
+          return [
+            ...prevProfiles.slice(0, index),
+            updatedProfile,
+            ...prevProfiles.slice(index + 1),
+          ];
+        });
+      };
+  
+      reader.readAsDataURL(file);
+    }
+  };
+  
 
-          <div className="Edit__profile_menu">
-            <Link to="/">
-              <div>
-                완료
+    const onNameChange = (profileId, newName) => {
+      setInputValues({ ...inputValues, [profileId]: newName });
+    };
+  
+    const updateProfileName = async (profileId, newName) => {
+      try {
+        await updateDoc(doc(db, "profiles", profileId), {
+          displayName: newName,
+        });
+      } catch (error) {
+        console.error("Error updating profile name: ", error);
+      }
+    };
+  
+    return (
+      <>
+        <div className="logo"></div>
+        <section className="profile">
+          <h2>프로필을 수정하세요.</h2>
+          <h3 className="blind">My profile info</h3>
+          <form className="Profile__wrap">
+            {profiles.map((profile) => (
+              <div key={profile.id} className="Profile__box">
+                <input
+                  id="check_btn"
+                  type="checkbox"
+                  value={profile.id}
+                  onChange={(e) => onChange(e, profile)}
+                />
+                <span className="Profile__img">
+                  <img src={profile.photoURL} alt="Profile Image" />
+                  <label className="selectPhoto" htmlFor="attach-file">
+                  <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
+                  <input
+                    className='Select__File'
+                    id='attach-file'
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => onFileChange(e, profile)}
+                  />
+                  </label>
+                </span>
+                <input
+                  className="profileName"
+                  type="text"
+                  placeholder={inputValues[profile.id] || profile.displayName}
+                  onChange={(e) => onNameChange(profile.id, e.target.value)}
+                  onBlur={() =>
+                    updateProfileName(profile.id, inputValues[profile.id])
+                  }
+                />
               </div>
-              <button className="delete" onClick={() => onDelete(selectedProfiles)}>
-              프로필 삭제
-              </button>
-            </Link>
-          </div>    
-        </form>
-      </section>
-
-
-</>
-);
-}
-
-export default Edit;
+            ))}
+            <div className="Edit__profile_menu">
+              <Link to="/">
+                <div className='done'>완료</div>
+                <button
+                  className="delete"
+                  onClick={() => onDelete(selectedProfiles)}
+                >
+                  프로필 삭제
+                </button>
+              </Link>
+            </div>
+          </form>
+        </section>
+      </>
+    );
+  }
+  
+  export default Edit;

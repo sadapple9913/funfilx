@@ -1,5 +1,5 @@
 import React from 'react'
-import { Outlet, Route, Routes } from 'react-router-dom'
+import { Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import Footer from '../components/Footer'
 import MainPage from 'routes/MainPage'
 import DetailPage from 'routes/DetailPage'
@@ -11,10 +11,13 @@ import Nav from '../components/Nav'
 
 function Main({userObj}) {
 
+  const location = useLocation();
+  const selectedProfile = location.state?.selectedProfile;
+
     const Layout = () =>{
     return (
       <div>
-      <Nav userObj={userObj}/>
+      <Nav selectedProfile={selectedProfile}/>
       <Outlet />
       <Footer />
       </div>
