@@ -55,7 +55,7 @@ function Nav({userObj, selectedProfile }) {
       {selectedProfile && (
       <>
           <img
-            src={selectedProfile.photoURL}
+            src={selectedProfile.photoURL ? selectedProfile.photoURL : "https://i.pinimg.com/564x/5e/b3/d4/5eb3d4110d3634caf6526151ee71d18c.jpg"}
             alt="User logged"
             className="nav__avatar"
             onClick={onClick}

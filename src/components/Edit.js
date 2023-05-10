@@ -121,7 +121,7 @@ function Edit({userObj}) {
                   onChange={(e) => onChange(e, profile)}
                 />
                 <span className="Profile__img">
-                  <img src={profile.photoURL} alt="Profile Image" />
+                <img src={profile.photoURL ? profile.photoURL : "https://i.pinimg.com/564x/5e/b3/d4/5eb3d4110d3634caf6526151ee71d18c.jpg"} alt="Profile Image" />
                   <label className="selectPhoto" htmlFor="attach-file">
                   <FontAwesomeIcon icon="fa-solid fa-pen-to-square" />
                   <input

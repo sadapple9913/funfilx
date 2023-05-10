@@ -43,7 +43,7 @@ function My({userObj}) {
             e.preventDefault();
             navigate("/Main", { state: { selectedProfile: profile } });
           }}>
-                <img src={profile.photoURL} alt="Profile Image" />
+                <img src={profile.photoURL ? profile.photoURL : "https://i.pinimg.com/564x/5e/b3/d4/5eb3d4110d3634caf6526151ee71d18c.jpg"} alt="Profile Image" />
             </span>
 
             <span className="Profile_name">{profile.displayName}</span>
