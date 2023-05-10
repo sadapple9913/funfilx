@@ -4,12 +4,14 @@ import "styles/MovieModal.css"
 import axios from 'api/axios';
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faArrowLeft, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 function MovieModal({setModalOpen, backdrop_path, release_date, overview, title, name, vote_average, first_air_date, id  }) {
   const ref = useRef();
   const [videoId, setVideoId] = useState("");
   const [showIframe, setShowIframe] = useState(false);
+  const [genres, setGenres] = useState([]);
+  const [popularity, setPopularity] = useState(null);
  
   useOnClickOutside(ref , () =>{
     setModalOpen(false)
@@ -18,7 +20,7 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
   const handleImageClick = () => {
     setShowIframe(true);
   }
-
+  
   useEffect(() => {
     const fetchVideo = async () => {
       try {
@@ -26,6 +28,25 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
         const videoResults = response.data.results;
         if (videoResults.length > 0) {
           setVideoId(videoResults[0].key);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+
+      try {
+        const response = await axios.get(`/movie/${id}`);
+        console.log(response.data); // Check response
+        if (response.data) {
+          if (response.data.genres) {
+            setGenres(response.data.genres);
+          } else {
+            setGenres([]);
+          }
+          if (response.data.popularity) {
+            setPopularity(response.data.popularity);
+          } else {
+            setPopularity(null);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -55,7 +76,7 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
           ) : (
             <div onClick={handleImageClick}>
             <img className='modal__poster-img' alt={title ? title : name} src={`https://image.tmdb.org/t/p/original/${backdrop_path}`}/>
-            <div className='play_icon'><FontAwesomeIcon icon="fa-solid fa-play"/></div>
+            <div className='play_icon'><FontAwesomeIcon icon={faPlay} /></div>
             </div>
           )}
           <div className='modal__content'>
@@ -63,8 +84,25 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
               <span className='modal__user_perc'>100% for you</span> {" "}
               {release_date ? release_date : first_air_date}
             </p>
+            <p className="modal__genres">
+              {genres.map((genre, index) => (
+                <span key={genre.id}>
+                  {genre.name}
+                  {index < genres.length - 1 ? " | " : ""}
+                </span>
+              ))}
+            </p>
             <h2 className='modal__title'>{title ? title : name}</h2>
-            <p className='modal__details'> 평점 : {vote_average}</p>
+            <div className='modal__under'>
+            <p className='modal__detail'> 평점 : {vote_average}</p>
+            <p  className='modal__popularity'>
+            <span>
+               <FontAwesomeIcon icon={faHeart} />
+            </span> 
+              {popularity}
+              </p>
+            </div>
+ 
             <p className='modal__overview'>{overview}</p>
             {/* 스틸컷 나오게  */}
           </div>

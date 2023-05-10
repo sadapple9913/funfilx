@@ -36,8 +36,7 @@ z-index: 1000; position: absolute;top: 0;width: 80px;height: 100%;cursor: pointe
 }
 
 @media screen and (max-width:768px) { /* 0~768 */
-  .row__poster{max-height:100px}
-  .row__posterLarge{max-height: 200px;}
+  .row__poster{max-height:200px}
   
 }
 

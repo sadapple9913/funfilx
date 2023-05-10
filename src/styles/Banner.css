@@ -55,9 +55,12 @@ margin-left: 40px;padding-top: 140px;height: 190px;
 
 @media (max-width: 768px) { /* 0~768 */
   .banner__contents{
-    width: min-content!important; padding-left: 2.3rem;
+    width:500px ; padding-left: 2.3rem;
     margin-left: 0 !important;
   }
-  .banner__description{font-size: 0.8rem !important; width: auto !important;}
+  .banner__title{
+    font-size: 2rem; font-weight: 800;padding-bottom: 0.5rem;
+  }
+  .banner__description{font-size: 1rem !important; width: auto !important;}
   .banner__button{font-size: 0.8rem !important;border-radius: 4px !important;}
 }

@@ -58,8 +58,8 @@ function Row({isLargeRow, title, id , fetchUrl , disableClick}) {
           slidesPerGroup: 4,
         }
         ,0:{
-          slidesPerView : 3, 
-          slidesPerGroup: 3,
+          slidesPerView : 2, 
+          slidesPerGroup: 2,
         }
         
         }}

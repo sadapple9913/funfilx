@@ -75,11 +75,11 @@ function MovieMiniModal({setMiniModalOpen, backdrop_path, release_date, overview
             </div>
             </div>
           <div className='modal__content Mini'>
-            <p className='modal__details Mini'>
+            <p className='MiniModal__details'>
               <span className='modal__user_perc Mini'>100% for you</span>
               <span>{release_date ? release_date : first_air_date}</span>
             </p>
-            <p className="modal__genres">
+            <p className="modal__genres Mini">
               {genres.map((genre, index) => (
                 <span key={genre.id}>
                   {genre.name}
