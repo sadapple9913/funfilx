@@ -3,7 +3,6 @@ import Nav from 'components/Nav'
 import "styles/App.css"
 import Footer from 'components/Footer'
 import { Outlet, Route, Routes } from 'react-router-dom'
-import MainPage from 'routes/MainPage'
 import DetailPage from 'routes/DetailPage'
 import SearchPage from 'routes/SearchPage'
 import Auth from 'routes/Auth'
@@ -16,14 +15,9 @@ import Edit from 'components/Edit'
 import Main from 'routes/Main'
 import CreateProfile from 'components/CreateProfile'
 import My from 'components/My'
+import { ProfileProvider } from "./components/ProfileContext";
 
 library.add(fas, faFontAwesome )
-
-
-// 중첩라우팅 부모 Layout 에  <Outlet /> 을 사용하면 자식경로 요소를 렌더링할수있다 <Outlet />  =           <Route path='' element={<MainPage />} />
-// path 대신 index를 쓰면 localhost:3000/ 이다 = 홈
-// search => localhost:3000/search index를 넣으면 기본값이 localhost:3000/ 바뀌어서 / 안해도됨
-// :movieId => localhost:3000/863 state값을 붙이고싶을땐 :을 붙이면 가능하다
 
 function App() {
   const auth = getAuth();
@@ -59,13 +53,14 @@ function App() {
   });
 
   return (
+    <ProfileProvider>
     <div className='app'>
       {init ? (
         <Routes>
           {isLoggedIn ? (
             <>
               <Route path="/" element={<MyProfile userObj={userObj} />} />
-              <Route path="/Main" element={<Main userObj={userObj} />} />
+              <Route path="/Main/*" element={<Main userObj={userObj} />} />
               <Route path='/Edit' element={<Edit userObj={userObj} />} />
               <Route path='/My' element={<My userObj={userObj}  />} />
               <Route path='/CreateProfile' element={<CreateProfile userObj={userObj} addProfile={addProfile} />} />
@@ -82,6 +77,7 @@ function App() {
         'Initializing...'
       )}
     </div>
+    </ProfileProvider>
   )
 }
 

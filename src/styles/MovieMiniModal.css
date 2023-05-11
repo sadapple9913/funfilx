@@ -23,7 +23,7 @@ animation: fadeIn 400ms ease 0s;}
 .modal__content.Mini{padding: 10px;}
 .MiniModal__details{display: flex;flex-direction: row;  justify-content: space-between; font-size: 16px; font-weight: 600; }
 .modal__user_perc.Mini{color: #46d369;}
-
+.modal__genres.Mini{font-size: 1rem;margin-top: 3px; color: rgba(255,255,255,0.7);}
 .modal__title.Mini{font-size: 1.5rem; margin: 16px 0; padding: 0;}
 .modal__detail.Mini{font-size: 18px;font-weight: 600;padding-bottom: 5px;}
 

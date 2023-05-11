@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import 'styles/Nav.css'
 import { signOut } from "firebase/auth";
 import {auth} from '../fbase'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faUser , faPenToSquare , faCircleQuestion} from '@fortawesome/free-regular-svg-icons'
+import { useProfile } from "./ProfileContext";
 
-
-function Nav({userObj, selectedProfile }) {
+function Nav({userObj}) {
   const [ show , setShow] = useState(false);
   const [searchValue , setSearchValue] = useState("");
   const navigate = useNavigate();
   const [profileOpen, setProfileOpen] = useState(false); 
+  const { selectedProfile } = useProfile();
 
-  console.log("navuserObj->>",userObj)
+  console.log("navuserObj->>",selectedProfile)
 
   useEffect(() =>{
     window.addEventListener("scroll" , () =>{
@@ -47,8 +48,14 @@ function Nav({userObj, selectedProfile }) {
   return (
 
     <nav className={`nav ${show && "nav__black"}`}>
-      <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png' alt='netfilx logo' className='nav__logo' 
-      onClick={() => {window.location.href="/funfilx/Main"}}/>
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/170px-Netflix_2015_logo.svg.png"
+      alt="netfilx logo"
+      className="nav__logo"
+      onClick={() => {
+        navigate("/Main");
+      }}
+    />
 
       <input tpye="sreach" placeholder='영화를 검색해주세요' className='nav__input' onChange={onChange} value={searchValue} />
       

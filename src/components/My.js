@@ -4,11 +4,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CreateProfile from "./CreateProfile";
 import {collection,onSnapshot,orderBy,query,where,deleteDoc,doc,} from "firebase/firestore";
 import { db } from "fbase";
+import { useProfile } from "./ProfileContext";
 
 function My({userObj}) {
   const navigate = useNavigate();
   const [attachment, setAttachment] = useState("");
   const [profiles, setProfiles] = useState([]);
+  const { setSelectedProfile } = useProfile();
+
+  const onClick = (e, profile) => {
+    e.preventDefault();
+    setSelectedProfile(profile);
+    localStorage.setItem("selectedProfile", JSON.stringify(profile));
+    navigate("/Main", { state: { selectedProfile: profile } });
+  };
 
   useEffect(() => {
     const q = query(
@@ -39,10 +48,7 @@ function My({userObj}) {
 
           <Link to={{ pathname: "/Main", state: { selectedProfile: profile } }}  />
 
-            <span className="Profile__img" onClick={(e) => {
-            e.preventDefault();
-            navigate("/Main", { state: { selectedProfile: profile } });
-          }}>
+            <span className="Profile__img"onClick={(e) => onClick(e, profile)}>
                 <img src={profile.photoURL ? profile.photoURL : "https://i.pinimg.com/564x/5e/b3/d4/5eb3d4110d3634caf6526151ee71d18c.jpg"} alt="Profile Image" />
             </span>
 

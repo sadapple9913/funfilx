@@ -5,12 +5,14 @@ import '../styles/SearchPage.css';
 import useDebounce from 'api/Hooks/useDebounce';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Nav from 'components/Nav';
+import { useProfile } from "../components/ProfileContext";
 
 function SearchPage({userObj}) {
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate("");
   const [genres, setGenres] = useState([]);
-
+  const { selectedProfile } = useProfile();
+  
   const useQuery = () => {
     return new URLSearchParams(useLocation().search);
   }
@@ -21,23 +23,6 @@ function SearchPage({userObj}) {
   const debounceSearchTrem = useDebounce(searchTerm, 500);
   console.log('searchTerm->',searchTerm);
 
-  // useEffect(() => {
-  //   if(searchTerm){
-  //     fetchSearchMovie(searchTerm);
-  //   }
-  // },[searchTerm]);
-
-  // useEffect(() => {
-  //   async function fetchGenres() {
-  //     try {
-  //       const response = await axios.get('/genre/movie/list');
-  //       setGenres(response.data.genres);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   }
-  //   fetchGenres();
-  // }, []);
 
   useEffect(() => {
     async function fetchSearchResults() {
@@ -80,7 +65,7 @@ function SearchPage({userObj}) {
   const renderSearchResults = () => {
     return (
       <div>
-        <Nav userObj={userObj} />
+        <Nav selectedProfile={selectedProfile} />
         {searchResults.length > 0 ? (
           <section className="search-container">
             {genres && searchResults.map((movie) => {
