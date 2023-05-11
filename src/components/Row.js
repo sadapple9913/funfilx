@@ -41,9 +41,9 @@ function Row({isLargeRow, title, id, fetchUrl, disableClick}) {
         <section className='row' key={id}>
             <h2>{title}</h2>
             <Swiper
-                wrapperclassname="swiper-wrapper"
+                wrapperClassName="swiper-wrapper"
                 modules={[Navigation, Pagination, Scrollbar, A11y]}
-                navigation="navigation"
+                navigation
                 pagination={{
                     clickable: true
                 }}
@@ -67,9 +67,9 @@ function Row({isLargeRow, title, id, fetchUrl, disableClick}) {
                     }
 
                 }}
-                wrapperprops={{
+                wrapperProps={{
                     style: {
-                        overflow: 'visible !important'
+                        overflow: 'visible'
                     }
                 }}>
 
