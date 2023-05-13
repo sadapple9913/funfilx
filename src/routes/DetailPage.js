@@ -9,7 +9,7 @@ import { faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 function DetailPage() {
   const [movie, setMovie] = useState({});
-  const { movieId } = useParams(); //Param 값을가져오는 hook함수
+  const { movieId } = useParams(); 
   console.log("movieId->",movieId)
   const [isClicked , setIsClicked] = useState(false);
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function DetailPage() {
 
 
     function goBack() {
-      navigate(-1); // 이전 페이지로 돌아가는 기능
+      navigate(-1);
     }
   
 
