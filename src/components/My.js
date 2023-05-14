@@ -56,23 +56,21 @@ function My({userObj}) {
         </li>
       ))}
 
+      {profiles.length < 5  && (
         <li
           className="Profile__box plus"
           onClick={() => navigate(`/CreateProfile`)}
         >
           <span className="Profile__img">
             <img
-              src="https://i.pinimg.com/564x/e0/26/d4/e026d4f6351d925a132b182cf7d585e1.jpg"
+              src={process.env.PUBLIC_URL + '/images/plusBtn.png'} 
               alt="My Image"
-            />
-            <FontAwesomeIcon
-              icon="fa-solid fa-circle-plus"
-              className="plus__icon"
             />
           </span>
 
           <span className="Profile_Plus">프로필 추가</span>
         </li>
+      )}
       </ul>
     </>
   );

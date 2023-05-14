@@ -10,7 +10,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import "../styles/Row.css"
 
-function Row({isLargeRow, title, id, fetchUrl, disableClick}) {
+function Row({title, id, fetchUrl, disableClick}) {
     const [movies, setMovies] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalMiniOpen, setModalMiniOpen] = useState(false);

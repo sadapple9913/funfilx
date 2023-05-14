@@ -17,6 +17,8 @@ function Auth() {
   const [password, setPassword] = useState("");
   const [newAccout, setNewAccount] = useState(true);
   const [error, setError] = useState("");
+  const [movies, setMovies] = useState([]);
+
   const onChange = (e) => {
     const {
       target: { name, value },
@@ -91,7 +93,20 @@ function Auth() {
         </button>
       </div>
       </div>
-   
+      <div className='row__posters'>
+      {
+                        movies.map((movie) => (
+      <img
+                                        key={movie.id}
+                                        className={`row__poster `}
+                                        src={movie.backdrop_path
+                                            ? `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`
+                                            : `https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+                                        loading='lazy'
+                                        alt={movie.title || movie.name || movie.original_name}/>
+                                        ))
+                                      }
+                                      </div>
     </div>
   );
 }

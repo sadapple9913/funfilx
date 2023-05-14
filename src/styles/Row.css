@@ -2,15 +2,16 @@ body{
   overflow-x: hidden;
 }
 .row{
-  z-index: 500;
+  position: relative;
+  top: -200px;
   margin-left: 20px;color: #fff;
 }
-.row>h2{padding-left: 20px; font-size: 32px; margin-bottom: 30px;}
+.row>h2{z-index: 1; padding-left: 20px; font-size: 32px; margin-bottom: 30px;}
 
 .row__posters{display: flex;padding: 20px 0 20px 20px;
 }
 .row__posters::-webkit-scrollbar{display: none;}
-.row__poster{ width: 95%;max-height: 144px;object-fit: contain;margin-right: 10px;border-radius: 4px;transition: transform 300ms linear 0s;}
+.row__poster{ width: 99%;max-height: 180px;object-fit: contain;border-radius: 4px;transition: transform 300ms linear 0s;}
 /* .row__poster:hover{transform: scale(1.08);} */
 .row__posterLarge{max-height: 320px;}
 /* .row__posterLarge:hover{transform: scale(1.1); opacity: 1; } */
@@ -29,16 +30,7 @@ z-index: 1000; position: absolute;top: 0;width: 80px;height: 100%;cursor: pointe
 }
 .slider__arrow:hover{background: rgba(20,20,20,0.5);}
 
-@media screen and (min-width:1200px) { /* 1200~ */
-  .row__poster{max-height:160px}
-  .row__posterLarge{max-height: 280px;}
-  
-}
 
-@media screen and (max-width:768px) { /* 0~768 */
-  .row__poster{max-height:200px}
-  
-}
 
 /* swiper */
 
@@ -47,11 +39,12 @@ z-index: 1000; position: absolute;top: 0;width: 80px;height: 100%;cursor: pointe
 .swiper{
   overflow: visible !important;
   margin-bottom: 50px;
-  z-index: 0;
+
 }
 
-.swiper-button-prev{color: #fff !important;}
-.swiper-button-next{color: #fff !important;}
+
+.swiper-button-prev{z-index: 1;  color: #fff !important;}
+.swiper-button-next{z-index: 1;  color: #fff !important;}
 .swiper-button-next::after , .swiper-button-prev::after{
   font-size: 1.3rem !important; font-weight: 600 !important;
 }
@@ -60,7 +53,6 @@ z-index: 1000; position: absolute;top: 0;width: 80px;height: 100%;cursor: pointe
 .swiper-pagination-bullet{background: #fff !important;}
 
 .row__poster-info{
-  z-index: 1000;
   width: 100%;
   height: 100%;
   position: absolute;
@@ -77,4 +69,26 @@ z-index: 1000; position: absolute;top: 0;width: 80px;height: 100%;cursor: pointe
   position: absolute;
   bottom: 20px;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+@media screen and (max-width:1200px) { /* 1200~ */
+  .row{
+    top: -50px;
+    margin: 0;
+  }
+  .row__poster{max-height:180px}  
+}
+
+@media screen and (max-width:768px) { /* 0~768 */
+  .row{
+    top: -100px;
+    margin: 0;
+  }
+  .row>h2{padding-left: 5px; font-size: 24px; margin-bottom: 20px;}
+  .row__poster{max-height:180px}
+  .swiper{
+    margin-bottom: 60px;
+  }
+  
 }

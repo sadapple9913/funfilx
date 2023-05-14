@@ -21,10 +21,10 @@ console.log("attachment",attachment);
 console.log("newDisplayName ", newDisplayName )
 
   return (
-    <>
+    <div className='myProfile_wrap'>
     <div className="logo"></div>
       <section className="profile">
-      <h2>Netfilx를 시청할 프로필을 선택하세요 . </h2>
+      <h2>NETFILX를 시청할 프로필을 선택하세요.</h2>
           <h3 className="blind">My profile info</h3>
             <My userObj={userObj} />
             <ul className="profile_menu">
@@ -36,7 +36,7 @@ console.log("newDisplayName ", newDisplayName )
             </ul>
         </section>
 
-    </>
+    </div>
   )
 }
 

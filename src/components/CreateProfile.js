@@ -71,9 +71,8 @@ function CreateProfile({ userObj, addProfile }) {
       <h1>프로필 추가</h1>
       <p>Netfilx를 시청할 다른 사용자를 등록하시려면 프로필을 추가하세요.</p>
       <div className='creating__box'>
+      <form className='create_container' >
       <img src={attachment} className='profile__image' />
-      <form className='create_container' onSubmit={onSubmit}>
-
           {newDisplayName ? (
             <input className="create_wrap" type="text" onChange={onChange}  placeholder={newDisplayName}/>
           ) : (
@@ -82,16 +81,16 @@ function CreateProfile({ userObj, addProfile }) {
           <label className="select" htmlFor="attach-file">
             <input className="file" type='file' accept='image/*' onChange={onFileChange} style={{opacity:0}}  id="attach-file"/>
         </label>
-        <button type="submit" className="save" >
-        저장
-        </button>
-        <button className="back_button" onClick={() => navigate("/")}> 취소 </button>
+
       </form > 
       </div>    
-
+      <button type="submit" className="save" onClick={onSubmit}>
+        저장
+      </button>
+        <button className="back_button" onClick={() => navigate("/")}> 취소 </button>
     </div>
     </>
-    
+
   )
 }
 

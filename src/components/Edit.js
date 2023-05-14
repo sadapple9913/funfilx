@@ -144,7 +144,8 @@ function Edit({userObj}) {
                 />
               </div>
             ))}
-            <div className="Edit__profile_menu">
+          </form>
+          <div className="Edit__profile_menu">
               <Link to="/">
                 <div className='done'>완료</div>
                 <button
@@ -155,7 +156,6 @@ function Edit({userObj}) {
                 </button>
               </Link>
             </div>
-          </form>
         </section>
       </>
     );

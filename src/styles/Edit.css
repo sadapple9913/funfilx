@@ -1,91 +1,45 @@
 @import '../styles/reset.css';
 
-
-
-.logo{
-  background-size: 70%;
-}
-
-.profile{
+.Edit__profile_menu{
   position: relative;
-  top: 30%;
   left: 50%;
   transform: translateX(-50%);
-  width: 55%;
-  color: #fff;
-  text-align: center;
-}
-
-.profile>h2{
-  font-size: 52px;
-}
-
-.Profile__wrap{
-display: flex;
-justify-content: center;
-gap: 10px;
-}
-
-.Profile__box{
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  height: 181px;
-  background: url(../images/empty.jpg)no-repeat 0 0;
-  background-size: cover;
+  width: 100%;
+  max-width: 410px;
   margin-top: 30px;
 }
-
-.Profile__box>a{
-  text-indent: -9999px;
-  overflow: hidden;
+.Edit__profile_menu>a{
+  display: flex;
+  gap: 10px;
 }
-
-.Profile__img>img{
-  width: 200px;
-  height: 182.39px;
-}
-
-.Profile_name{
-  margin-top: 8px;
-  font-size: 24px;
-  color: #fff;
-}
-
 
 .done{
-position: absolute;
-left: calc(50% - 220px);
-top: 400px;
 color: #ccc;
 font-size: 28px;
 width: 200px;
 padding: 5px;
 border: 1px solid #ccc;
+cursor: pointer;
 }
-
 .delete{
-  position: absolute;
-  left: 50%;
-  top: 400px;
   color: #ccc;
   font-size: 28px;
   width: 200px;
   padding: 5px;
   border: 1px solid #ccc;
   background: #111;
+  cursor: pointer;
 }
+
 #check_btn{
 position: absolute;
 margin: 10px;
 }
 
 .profileName{
-  position: relative;
-  top: -30px;
+  margin-top: 20px;
   color: #ccc;
   font-size: 28px;
-  width: 188.5px;
   padding: 2px 5px;
   border: 1px solid #ccc;
   background: #111;
@@ -94,13 +48,13 @@ margin: 10px;
 .selectPhoto{
   position: relative;
   top: -40px;
-  left: 80px;
   display: inline-block;
-  width: 60px;
+  width: 25px;
   height: 20px;
   cursor: pointer;
 
 }
+
 .selectPhoto>svg{
   font-size: 24px;
   box-shadow: 1px 1px 2px #111;
@@ -109,6 +63,36 @@ margin: 10px;
   color: rgba(255,255,255,0.9);
 }
 .Select__File{
-  text-indent: -9999px;
-  overflow: hidden;
+display: none;
 }
+
+
+
+@media (max-width: 1024px) {
+  .Profile__img {
+    max-height: 106px;
+}
+}
+
+@media (max-width: 550px) {
+  .Profile__img {
+    max-width: 70px;
+    max-height: 70px;
+  }
+
+  .profileName{
+    margin-top: 10px;
+    color: #ccc;
+    font-size: 16px;
+    padding: 2px 5px;
+    border: 1px solid #ccc;
+    background: #111;
+  }
+
+  .done{
+    font-size: 22px;
+    }
+    .delete{
+      font-size: 22px;
+    }
+  }

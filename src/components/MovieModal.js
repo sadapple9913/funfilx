@@ -14,7 +14,7 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
   const [popularity, setPopularity] = useState(null);
  
   useOnClickOutside(ref , () =>{
-    setModalOpen(false)
+    setModalOpen(false);
   });
 
   const handleImageClick = () => {
@@ -35,7 +35,7 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
 
       try {
         const response = await axios.get(`/movie/${id}`);
-        console.log(response.data); // Check response
+        console.log(response.data);
         if (response.data) {
           if (response.data.genres) {
             setGenres(response.data.genres);
@@ -60,11 +60,13 @@ function MovieModal({setModalOpen, backdrop_path, release_date, overview, title,
    <div className='presentation'>
       <div className='wrapper-modal'>
         <div className='modal' ref={ref}>
-          <span className='modal-close' onClick={() => {
+        <span className='modal-close' onClick={(event) => {
+          event.stopPropagation();
+          setShowIframe(false);
+          if(!showIframe){
             setModalOpen(false);
-            setShowIframe(false);
-          }}>X
-          </span>
+          }
+        }}>X</span>
           {showIframe ? (
             <Iframe
               src={`https://www.youtube.com/embed/${videoId}?controls=0&autoplay=1&loop=1&mute=1&playlist=${videoId}`}

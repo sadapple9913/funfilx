@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import 'styles/Banner.css'
 import DetailPage from 'routes/DetailPage';
 import MovieModal from './MovieModal';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function Banner() {
 const [movie , setMovie] =useState([]);
@@ -64,10 +65,10 @@ const [moviesSelected , setMoviesSelected] = useState((""));
          </h1>
          <div className='banner__buttons'>
            <button className='banner__button play' onClick={() => setIsClicked(true)} >
-             play
+             <span><FontAwesomeIcon icon="fa-solid fa-circle-play" /> </span> 재생
            </button>
            <button className='banner__button info' onClick={() => handleClick(movie)} >
-            More Information
+           <span><FontAwesomeIcon icon="fa-solid fa-circle-info" /></span> 정보
             
           {modalOpen && (
             <MovieModal {...moviesSelected} setModalOpen={setModalOpen} />
