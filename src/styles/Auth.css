@@ -18,11 +18,11 @@
 .logo{
   z-index: 20;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 20px;
+  left: 20px;
   width: 20%;height: 150px;
 
-  background:  url(../images/Netflix_Logo_RGB.png)no-repeat 0 0;
+  background:  url(../images/funfilx.png)no-repeat 0 0;
   background-size: contain;
 }
 
