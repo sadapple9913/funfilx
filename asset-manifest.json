@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/funfilx/static/css/main.c55b3230.css",
-    "main.js": "/funfilx/static/js/main.e0beafd9.js",
+    "main.css": "/funfilx/static/css/main.191c3899.css",
+    "main.js": "/funfilx/static/js/main.bff448ad.js",
     "static/media/auth_background.png": "/funfilx/static/media/auth_background.fc1f4c06facd05d9f351.png",
+    "static/media/funfilx.png": "/funfilx/static/media/funfilx.896b6b68282f1c7e9615.png",
     "static/media/Netflix_Logo_RGB.png": "/funfilx/static/media/Netflix_Logo_RGB.f4070143e1f521da82a1.png",
     "index.html": "/funfilx/index.html",
-    "main.c55b3230.css.map": "/funfilx/static/css/main.c55b3230.css.map",
-    "main.e0beafd9.js.map": "/funfilx/static/js/main.e0beafd9.js.map"
+    "main.191c3899.css.map": "/funfilx/static/css/main.191c3899.css.map",
+    "main.bff448ad.js.map": "/funfilx/static/js/main.bff448ad.js.map"
   },
   "entrypoints": [
-    "static/css/main.c55b3230.css",
-    "static/js/main.e0beafd9.js"
+    "static/css/main.191c3899.css",
+    "static/js/main.bff448ad.js"
   ]
 }
