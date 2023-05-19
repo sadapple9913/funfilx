@@ -3,7 +3,6 @@ import axios from 'api/axios';
 import requests from 'api/requests';
 import styled from 'styled-components'
 import 'styles/Banner.css'
-import DetailPage from 'routes/DetailPage';
 import MovieModal from './MovieModal';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

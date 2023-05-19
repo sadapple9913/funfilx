@@ -2,8 +2,7 @@ import React from 'react'
 import Row from 'components/Row'
 import Banner from 'components/Banner'
 import requests from 'api/requests'
-import Nav from 'components/Nav'
-import Footer from 'components/Footer'
+
 
 function MainPage() {
   return (
